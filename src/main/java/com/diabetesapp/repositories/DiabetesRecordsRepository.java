@@ -2,6 +2,8 @@ package com.diabetesapp.repositories;
 
 import com.diabetesapp.model.DiabetesRecord;
 
+import javax.ws.rs.QueryParam;
+import java.sql.Date;
 import java.util.List;
 
 public interface DiabetesRecordsRepository {
@@ -20,5 +22,7 @@ public interface DiabetesRecordsRepository {
 
     // delete existing record
     void delete(int recordId);
+
+    List<DiabetesRecord> listSpecified(Date startingDate, Date endingDate);
 
 }

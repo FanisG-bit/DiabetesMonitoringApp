@@ -98,8 +98,8 @@ public class DiabetesRecordsDAO implements DiabetesRecordsRepository {
             preparedStatement.setInt(1, record.getBloodGlucoseLevel());
             preparedStatement.setInt(2, record.getCarbIntake());
             preparedStatement.setInt(3, record.getMedicationDose());
-            preparedStatement.setDate(4, (Date) record.getDateRecorded());
-            preparedStatement.setInt(5, record.getUserId());
+            preparedStatement.setDate(4, record.getDateRecorded());
+            preparedStatement.setInt(5, userId);
             preparedStatement.execute();
             preparedStatement.close();
         } catch (SQLException e) {
@@ -116,13 +116,15 @@ public class DiabetesRecordsDAO implements DiabetesRecordsRepository {
                     "SET blood_glucose_level = ?, " +
                     "carb_intake = ?, " +
                     "medication_dose = ?, " +
-                    "date_recorded = ? " +
+                    "date_recorded = ?, " +
+                    "user_id = ? " +
                     "WHERE record_id = ?;");
             preparedStatement.setInt(1, record.getBloodGlucoseLevel());
             preparedStatement.setInt(2, record.getCarbIntake());
             preparedStatement.setInt(3, record.getMedicationDose());
-            preparedStatement.setDate(4, (Date) record.getDateRecorded());
+            preparedStatement.setDate(4, record.getDateRecorded());
             preparedStatement.setInt(5, record.getUserId());
+            preparedStatement.setInt(6, record.getDiabetesRecordId());
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {
@@ -143,5 +145,11 @@ public class DiabetesRecordsDAO implements DiabetesRecordsRepository {
             System.err.println(e);
         }
         closeConnection(connection);
+    }
+
+    @Override
+    public List<DiabetesRecord> listSpecified(Date startingDate, Date endingDate) {
+
+        return null;
     }
 }
