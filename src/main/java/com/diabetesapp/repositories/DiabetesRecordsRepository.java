@@ -25,4 +25,12 @@ public interface DiabetesRecordsRepository {
 
     List<DiabetesRecord> listSpecified(Date startingDate, Date endingDate);
 
+    double averageBloodGlucose(Date startingDate, Date endingDate);
+
+    double averageBloodGlucose();
+
+    double averageCarbIntake(Date startingDate, Date endingDate);
+
+    double averageCarbIntake();
+
 }

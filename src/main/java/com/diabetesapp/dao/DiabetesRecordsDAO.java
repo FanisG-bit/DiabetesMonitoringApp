@@ -149,7 +149,107 @@ public class DiabetesRecordsDAO implements DiabetesRecordsRepository {
 
     @Override
     public List<DiabetesRecord> listSpecified(Date startingDate, Date endingDate) {
-
-        return null;
+        Connection connection = openConnection();
+        List<DiabetesRecord> list = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement
+                    = connection.prepareStatement("SELECT * FROM daily_diabetes_records " +
+                    "WHERE date_recorded BETWEEN ? AND ?;");
+            preparedStatement.setDate(1, startingDate);
+            preparedStatement.setDate(2, endingDate);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                list.add(DiabetesRecord.builder()
+                        .diabetesRecordId(resultSet.getInt(1))
+                        .bloodGlucoseLevel(resultSet.getInt(2))
+                        .carbIntake(resultSet.getInt(3))
+                        .medicationDose(resultSet.getInt(4))
+                        .dateRecorded(resultSet.getDate(5))
+                        .build());
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        closeConnection(connection);
+        return list;
     }
+
+    @Override
+    public double averageBloodGlucose(Date startingDate, Date endingDate) {
+        Connection connection = openConnection();
+        double average = 0.0;
+        try {
+            PreparedStatement preparedStatement
+                    = connection.prepareStatement("SELECT AVG(blood_glucose_level) FROM daily_diabetes_records " +
+                    "WHERE date_recorded BETWEEN ? AND ?;");
+            preparedStatement.setDate(1, startingDate);
+            preparedStatement.setDate(2, endingDate);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                average = resultSet.getDouble(1);
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        closeConnection(connection);
+        return average;
+    }
+
+    @Override
+    public double averageBloodGlucose() {
+        Connection connection = openConnection();
+        double average = 0.0;
+        try {
+            PreparedStatement preparedStatement
+                    = connection.prepareStatement("SELECT AVG(blood_glucose_level) FROM daily_diabetes_records;");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                average = resultSet.getDouble(1);
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        closeConnection(connection);
+        return average;
+    }
+
+    @Override
+    public double averageCarbIntake(Date startingDate, Date endingDate) {
+        Connection connection = openConnection();
+        double average = 0.0;
+        try {
+            PreparedStatement preparedStatement
+                    = connection.prepareStatement("SELECT AVG(carb_intake) FROM daily_diabetes_records " +
+                    "WHERE date_recorded BETWEEN ? AND ?;");
+            preparedStatement.setDate(1, startingDate);
+            preparedStatement.setDate(2, endingDate);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                average = resultSet.getDouble(1);
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        closeConnection(connection);
+        return average;
+    }
+
+    @Override
+    public double averageCarbIntake() {
+        Connection connection = openConnection();
+        double average = 0.0;
+        try {
+            PreparedStatement preparedStatement
+                    = connection.prepareStatement("SELECT AVG(carb_intake) FROM daily_diabetes_records;");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                average = resultSet.getDouble(1);
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        closeConnection(connection);
+        return average;
+    }
+
 }

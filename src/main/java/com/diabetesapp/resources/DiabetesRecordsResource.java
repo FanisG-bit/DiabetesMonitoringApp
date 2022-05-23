@@ -14,13 +14,6 @@ public class DiabetesRecordsResource {
     @Inject
     DiabetesRecordsRepository diabetesRecordsRepository;
 
-    @Path("/list")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<DiabetesRecord> list() {
-        return diabetesRecordsRepository.list();
-    }
-
     @Path("/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -49,12 +42,43 @@ public class DiabetesRecordsResource {
         diabetesRecordsRepository.delete(recordId);
     }
 
+    // Displaying all the above data over a (user-specified) time period.
     @Path("/list")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<DiabetesRecord> listSpecified(@QueryParam("startingDate") Date startingDate,
-                                              @QueryParam("endingDate") Date endingDate) {
+    public List<DiabetesRecord> list(@QueryParam("startingDate") Date startingDate,
+                                     @QueryParam("endingDate") Date endingDate) {
+        if(startingDate == null || endingDate == null) {
+            return diabetesRecordsRepository.list();
+        } else {
+            return diabetesRecordsRepository.listSpecified(startingDate, endingDate);
+        }
+    }
 
+    // Displaying the average daily blood glucose level over a (user- specified) period.
+    @Path("/averageBloodGlucose")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public double averageBloodGlucose(@QueryParam("startingDate") Date startingDate,
+                                    @QueryParam("endingDate") Date endingDate) {
+        if(startingDate == null || endingDate == null) {
+            return diabetesRecordsRepository.averageBloodGlucose();
+        } else {
+            return diabetesRecordsRepository.averageBloodGlucose(startingDate, endingDate);
+        }
+    }
+
+    // Displaying the average carb intake over a (user-specified) period.
+    @Path("/averageCarbIntake")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public double averageCarbIntake(@QueryParam("startingDate") Date startingDate,
+                                      @QueryParam("endingDate") Date endingDate) {
+        if(startingDate == null || endingDate == null) {
+            return diabetesRecordsRepository.averageCarbIntake();
+        } else {
+            return diabetesRecordsRepository.averageCarbIntake(startingDate, endingDate);
+        }
     }
 
 }
