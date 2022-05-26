@@ -14,11 +14,11 @@ public class DiabetesRecord {
 
     private int diabetesRecordId;
 
-    private int bloodGlucoseLevel;
+    private double bloodGlucoseLevel;
 
-    private int carbIntake;
+    private double carbIntake;
 
-    private int medicationDose;
+    private double medicationDose;
 
     private Date dateRecorded;
 

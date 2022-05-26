@@ -21,11 +21,18 @@ public class DiabetesRecordsResource {
         return diabetesRecordsRepository.get(recordId);
     }
 
-    @Path("/add")
+    /*@Path("/add")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public void get(@QueryParam("userId") int userId, DiabetesRecord newRecord) {
         diabetesRecordsRepository.add(newRecord, userId);
+    }*/
+
+    @Path("/add")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public void get(DiabetesRecord newRecord) {
+        diabetesRecordsRepository.add(newRecord);
     }
 
     @Path("/update")
@@ -60,7 +67,7 @@ public class DiabetesRecordsResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public double averageBloodGlucose(@QueryParam("startingDate") Date startingDate,
-                                    @QueryParam("endingDate") Date endingDate) {
+                                      @QueryParam("endingDate") Date endingDate) {
         if(startingDate == null || endingDate == null) {
             return diabetesRecordsRepository.averageBloodGlucose();
         } else {
@@ -73,7 +80,7 @@ public class DiabetesRecordsResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public double averageCarbIntake(@QueryParam("startingDate") Date startingDate,
-                                      @QueryParam("endingDate") Date endingDate) {
+                                    @QueryParam("endingDate") Date endingDate) {
         if(startingDate == null || endingDate == null) {
             return diabetesRecordsRepository.averageCarbIntake();
         } else {

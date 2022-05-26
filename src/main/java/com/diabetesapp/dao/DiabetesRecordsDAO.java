@@ -4,7 +4,9 @@ import com.diabetesapp.model.DiabetesRecord;
 import com.diabetesapp.repositories.DiabetesRecordsRepository;
 import javax.inject.Singleton;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Singleton
@@ -48,9 +50,9 @@ public class DiabetesRecordsDAO implements DiabetesRecordsRepository {
             while (resultSet.next()) {
                 diabetesRecords.add(DiabetesRecord.builder()
                         .diabetesRecordId(resultSet.getInt(1))
-                        .bloodGlucoseLevel(resultSet.getInt(2))
-                        .carbIntake(resultSet.getInt(3))
-                        .medicationDose(resultSet.getInt(4))
+                        .bloodGlucoseLevel(resultSet.getDouble(2))
+                        .carbIntake(resultSet.getDouble(3))
+                        .medicationDose(resultSet.getDouble(4))
                         .dateRecorded(resultSet.getDate(5))
                         .build());
             }
@@ -74,9 +76,9 @@ public class DiabetesRecordsDAO implements DiabetesRecordsRepository {
             while (resultSet.next()) {
                 record = DiabetesRecord.builder()
                         .diabetesRecordId(resultSet.getInt(1))
-                        .bloodGlucoseLevel(resultSet.getInt(2))
-                        .carbIntake(resultSet.getInt(3))
-                        .medicationDose(resultSet.getInt(4))
+                        .bloodGlucoseLevel(resultSet.getDouble(2))
+                        .carbIntake(resultSet.getDouble(3))
+                        .medicationDose(resultSet.getDouble(4))
                         .dateRecorded(resultSet.getDate(5))
                         .build();
             }
@@ -88,7 +90,7 @@ public class DiabetesRecordsDAO implements DiabetesRecordsRepository {
         return record;
     }
 
-    @Override
+    /*@Override
     public void add(DiabetesRecord record, int userId) {
         Connection connection = openConnection();
         try {
@@ -106,6 +108,31 @@ public class DiabetesRecordsDAO implements DiabetesRecordsRepository {
             System.err.println(e);
         }
         closeConnection(connection);
+    }*/
+
+    @Override
+    public void add(DiabetesRecord record) {
+        Connection connection = openConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO " +
+                    "daily_diabetes_records(blood_glucose_level, carb_intake, medication_dose, date_recorded)" +
+                    "VALUES(?, ?, ?, ?);");
+            preparedStatement.setDouble(1, record.getBloodGlucoseLevel());
+            preparedStatement.setDouble(2, record.getCarbIntake());
+            preparedStatement.setDouble(3, record.getMedicationDose());
+            preparedStatement.setDate(4, new Date(getPresentDate()));
+            preparedStatement.execute();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        closeConnection(connection);
+    }
+
+    private long getPresentDate() {
+        Calendar calendar = Calendar.getInstance();
+        long date = calendar.getTimeInMillis();
+        return date;
     }
 
     @Override
@@ -119,9 +146,9 @@ public class DiabetesRecordsDAO implements DiabetesRecordsRepository {
                     "date_recorded = ?, " +
                     "user_id = ? " +
                     "WHERE record_id = ?;");
-            preparedStatement.setInt(1, record.getBloodGlucoseLevel());
-            preparedStatement.setInt(2, record.getCarbIntake());
-            preparedStatement.setInt(3, record.getMedicationDose());
+            preparedStatement.setDouble(1, record.getBloodGlucoseLevel());
+            preparedStatement.setDouble(2, record.getCarbIntake());
+            preparedStatement.setDouble(3, record.getMedicationDose());
             preparedStatement.setDate(4, record.getDateRecorded());
             preparedStatement.setInt(5, record.getUserId());
             preparedStatement.setInt(6, record.getDiabetesRecordId());
@@ -161,9 +188,9 @@ public class DiabetesRecordsDAO implements DiabetesRecordsRepository {
             while (resultSet.next()) {
                 list.add(DiabetesRecord.builder()
                         .diabetesRecordId(resultSet.getInt(1))
-                        .bloodGlucoseLevel(resultSet.getInt(2))
-                        .carbIntake(resultSet.getInt(3))
-                        .medicationDose(resultSet.getInt(4))
+                        .bloodGlucoseLevel(resultSet.getDouble(2))
+                        .carbIntake(resultSet.getDouble(3))
+                        .medicationDose(resultSet.getDouble(4))
                         .dateRecorded(resultSet.getDate(5))
                         .build());
             }

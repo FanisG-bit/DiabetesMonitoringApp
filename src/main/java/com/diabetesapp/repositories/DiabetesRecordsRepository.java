@@ -1,8 +1,6 @@
 package com.diabetesapp.repositories;
 
 import com.diabetesapp.model.DiabetesRecord;
-
-import javax.ws.rs.QueryParam;
 import java.sql.Date;
 import java.util.List;
 
@@ -15,7 +13,9 @@ public interface DiabetesRecordsRepository {
     DiabetesRecord get(int recordId);
 
     // add new record
-    void add(DiabetesRecord record, int userId);
+    // void add(DiabetesRecord record, int userId);
+
+    void add(DiabetesRecord record);
 
     // update existing record
     void update(DiabetesRecord record);
