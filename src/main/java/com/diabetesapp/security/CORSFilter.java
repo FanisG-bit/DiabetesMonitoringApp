@@ -10,7 +10,7 @@ public class CORSFilter implements ContainerResponseFilter {
     public void filter(ContainerRequestContext requestContext,
                        ContainerResponseContext responseContext) {
         responseContext.getHeaders().add(
-                "Access-Control-Allow-Origin", "http://localhost:8091");
+                "Access-Control-Allow-Origin", "*");
         responseContext.getHeaders().add(
                 "Access-Control-Allow-Credentials", "true");
         responseContext.getHeaders().add(

@@ -2,6 +2,7 @@ package com.diabetesapp.resources;
 
 import com.diabetesapp.dao.UsersDAO;
 import com.diabetesapp.model.User;
+import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -9,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Path("/operations")
+@PermitAll
 public class ApplicationResource {
 
     @Inject

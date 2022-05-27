@@ -4,7 +4,6 @@ import com.diabetesapp.model.DiabetesRecord;
 import com.diabetesapp.repositories.DiabetesRecordsRepository;
 import javax.inject.Singleton;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -90,26 +89,6 @@ public class DiabetesRecordsDAO implements DiabetesRecordsRepository {
         return record;
     }
 
-    /*@Override
-    public void add(DiabetesRecord record, int userId) {
-        Connection connection = openConnection();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO " +
-                    "daily_diabetes_records(blood_glucose_level, carb_intake, medication_dose, date_recorded, user_id)" +
-                    "VALUES(?, ?, ?, ?, ?);");
-            preparedStatement.setInt(1, record.getBloodGlucoseLevel());
-            preparedStatement.setInt(2, record.getCarbIntake());
-            preparedStatement.setInt(3, record.getMedicationDose());
-            preparedStatement.setDate(4, record.getDateRecorded());
-            preparedStatement.setInt(5, userId);
-            preparedStatement.execute();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            System.err.println(e);
-        }
-        closeConnection(connection);
-    }*/
-
     @Override
     public void add(DiabetesRecord record) {
         Connection connection = openConnection();
@@ -143,15 +122,13 @@ public class DiabetesRecordsDAO implements DiabetesRecordsRepository {
                     "SET blood_glucose_level = ?, " +
                     "carb_intake = ?, " +
                     "medication_dose = ?, " +
-                    "date_recorded = ?, " +
-                    "user_id = ? " +
+                    "date_recorded = ? " +
                     "WHERE record_id = ?;");
             preparedStatement.setDouble(1, record.getBloodGlucoseLevel());
             preparedStatement.setDouble(2, record.getCarbIntake());
             preparedStatement.setDouble(3, record.getMedicationDose());
             preparedStatement.setDate(4, record.getDateRecorded());
-            preparedStatement.setInt(5, record.getUserId());
-            preparedStatement.setInt(6, record.getDiabetesRecordId());
+            preparedStatement.setInt(5, record.getDiabetesRecordId());
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {

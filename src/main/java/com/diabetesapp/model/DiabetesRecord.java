@@ -22,6 +22,4 @@ public class DiabetesRecord {
 
     private Date dateRecorded;
 
-    private int userId;
-
 }

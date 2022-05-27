@@ -13,8 +13,6 @@ public interface DiabetesRecordsRepository {
     DiabetesRecord get(int recordId);
 
     // add new record
-    // void add(DiabetesRecord record, int userId);
-
     void add(DiabetesRecord record);
 
     // update existing record

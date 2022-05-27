@@ -2,6 +2,7 @@ package com.diabetesapp.resources;
 
 import com.diabetesapp.model.DiabetesRecord;
 import com.diabetesapp.repositories.DiabetesRecordsRepository;
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -17,34 +18,31 @@ public class DiabetesRecordsResource {
     @Path("/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("ADMIN")
     public DiabetesRecord get(@PathParam("id") int recordId) {
         return diabetesRecordsRepository.get(recordId);
     }
 
-    /*@Path("/add")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public void get(@QueryParam("userId") int userId, DiabetesRecord newRecord) {
-        diabetesRecordsRepository.add(newRecord, userId);
-    }*/
-
     @Path("/add")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @RolesAllowed("ADMIN")
     public void get(DiabetesRecord newRecord) {
         diabetesRecordsRepository.add(newRecord);
     }
 
     @Path("/update")
     @PUT
-    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @RolesAllowed("ADMIN")
     public void update(DiabetesRecord newRecord) {
         diabetesRecordsRepository.update(newRecord);
     }
 
     @Path("/delete/{id}")
     @DELETE
-    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("ADMIN")
     public void delete(@PathParam("id") int recordId) {
         diabetesRecordsRepository.delete(recordId);
     }
@@ -53,6 +51,7 @@ public class DiabetesRecordsResource {
     @Path("/list")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("PHYSICIAN")
     public List<DiabetesRecord> list(@QueryParam("startingDate") Date startingDate,
                                      @QueryParam("endingDate") Date endingDate) {
         if(startingDate == null || endingDate == null) {
@@ -66,6 +65,7 @@ public class DiabetesRecordsResource {
     @Path("/averageBloodGlucose")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("PHYSICIAN")
     public double averageBloodGlucose(@QueryParam("startingDate") Date startingDate,
                                       @QueryParam("endingDate") Date endingDate) {
         if(startingDate == null || endingDate == null) {
@@ -79,6 +79,7 @@ public class DiabetesRecordsResource {
     @Path("/averageCarbIntake")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("PHYSICIAN")
     public double averageCarbIntake(@QueryParam("startingDate") Date startingDate,
                                     @QueryParam("endingDate") Date endingDate) {
         if(startingDate == null || endingDate == null) {
