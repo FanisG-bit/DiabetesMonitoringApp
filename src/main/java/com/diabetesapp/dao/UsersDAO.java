@@ -1,7 +1,6 @@
 package com.diabetesapp.dao;
 
 import com.diabetesapp.model.User;
-
 import javax.inject.Singleton;
 import java.sql.*;
 import java.util.ArrayList;
@@ -61,6 +60,26 @@ public class UsersDAO {
         }
         closeConnection(connection);
         return false;
+    }
+
+    public String getUserRole(String username, String password) {
+        Connection connection = openConnection();
+        String userRole = null;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT user_type FROM users" +
+                    " WHERE username = ? AND password = ?;");
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                userRole = resultSet.getString(1);
+            }
+            preparedStatement.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        closeConnection(connection);
+        return userRole;
     }
 
 }
