@@ -52,7 +52,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 based on the cw description this check is necessary
                         -> "<...> filter that ensures that a client request can only be served by a method
                 if it encompasses an authentication header with a username and password"
-                        */
+                */
                 if (authorization.isEmpty()) {
                     requestContext.abortWith(Response
                             .status(Response.Status.UNAUTHORIZED)

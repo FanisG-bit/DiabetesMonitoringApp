@@ -2,10 +2,13 @@ package com.diabetesapp.resources;
 
 import com.diabetesapp.model.DiabetesRecord;
 import com.diabetesapp.repositories.DiabetesRecordsRepository;
+import com.diabetesapp.service.LineChart;
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.sql.Date;
 import java.util.List;
 
@@ -87,6 +90,27 @@ public class DiabetesRecordsResource {
         } else {
             return diabetesRecordsRepository.averageCarbIntake(startingDate, endingDate);
         }
+    }
+
+    @Path("/chart")
+    @PermitAll
+    @GET
+    @Produces("image/png")
+    public Response getChart(@QueryParam("startingDate") Date startingDate,
+                             @QueryParam("endingDate") Date endingDate,
+                             @QueryParam("chartCase") String chartCase) {
+        if(!chartCase.equals("bloodGlucoseSingle") && !chartCase.equals("carbonIntakeSingle") &&
+                !chartCase.equals("bothInOne")) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity("The chartCase query parameter could not be resolved.")
+                    .build();
+        }
+        LineChart lineChart = new LineChart(diabetesRecordsRepository, startingDate, endingDate, chartCase);
+        byte[] chartImagePNG = lineChart.getChartImagePNG();
+        return Response
+                .ok(chartImagePNG)
+                .build();
     }
 
 }
