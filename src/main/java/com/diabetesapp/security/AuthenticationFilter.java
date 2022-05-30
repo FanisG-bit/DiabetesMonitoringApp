@@ -33,7 +33,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext requestContext) {
         Method requestedMethod = resourceInfo.getResourceMethod();
-         /* If resource method is annotated as PermitAll we don't do anything.
+        /* If resource method is annotated as PermitAll we don't do anything.
            Else we check for other security annotations. */
         if (!requestedMethod.isAnnotationPresent(PermitAll.class)) {
             // if resource method is annotated as DenyAll we block access.

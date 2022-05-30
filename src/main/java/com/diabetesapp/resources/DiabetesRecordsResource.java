@@ -10,6 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.Date;
+import java.util.Base64;
 import java.util.List;
 
 @Path("/diabetes-records")
@@ -108,8 +109,15 @@ public class DiabetesRecordsResource {
         }
         LineChart lineChart = new LineChart(diabetesRecordsRepository, startingDate, endingDate, chartCase);
         byte[] chartImagePNG = lineChart.getChartImagePNG();
+        /*
+            After searching for some time, I found out that we need to first encode the byte array
+            that composes an image to a base64 encoded String. At least, that is one of the
+            ways that turned out to work for me.
+            source -> https://sciter.com/forums/topic/displaying-image-byte-array/
+        */
+        String imageAsStringEncoded = Base64.getEncoder().encodeToString(chartImagePNG);
         return Response
-                .ok(chartImagePNG)
+                .ok(imageAsStringEncoded)
                 .build();
     }
 
