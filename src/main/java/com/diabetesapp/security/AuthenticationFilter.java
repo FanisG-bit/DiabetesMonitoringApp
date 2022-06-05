@@ -12,7 +12,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Base64;
 import java.util.List;
@@ -31,16 +30,11 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     @Inject
     UsersDAO usersDAO;
 
-    @Override
-    public void filter(ContainerRequestContext requestContext) throws IOException {
-
-    }
-
-   /* @Override
+   @Override
     public void filter(ContainerRequestContext requestContext) {
         Method requestedMethod = resourceInfo.getResourceMethod();
-        *//* If resource method is annotated as PermitAll we don't do anything.
-           Else we check for other security annotations. *//*
+        /* If resource method is annotated as PermitAll we don't do anything.
+           Else we check for other security annotations. */
         if (!requestedMethod.isAnnotationPresent(PermitAll.class)) {
             // if resource method is annotated as DenyAll we block access.
             if (requestedMethod.isAnnotationPresent(DenyAll.class)) {
@@ -54,11 +48,11 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 MultivaluedMap<String, String> headers = requestContext.getHeaders();
                 // get authorization headers.
                 List<String> authorization = headers.get("Authorization");
-                *//* if authorization headers are not provided, then we again block access.
+                /* if authorization headers are not provided, then we again block access.
                 based on the cw description this check is necessary
                         -> "<...> filter that ensures that a client request can only be served by a method
                 if it encompasses an authentication header with a username and password"
-                *//*
+                */
                 if (authorization.isEmpty()) {
                     requestContext.abortWith(Response
                             .status(Response.Status.UNAUTHORIZED)
@@ -93,5 +87,5 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 }
             }
         }
-    }*/
+    }
 }
