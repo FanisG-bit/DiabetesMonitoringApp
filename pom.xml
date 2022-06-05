@@ -97,6 +97,23 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.2</version>
+
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.diabetesapp</groupId>
+                                    <artifactId>webapp-runner</artifactId>
+                                    <version>8.5.11.3</version>
+                                    <destFileName>webapp-runner.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+
             </plugin>
         </plugins>
     </build>
