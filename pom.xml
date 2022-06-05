@@ -89,14 +89,12 @@
             <version>1.5.3</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.github.jsimone/webapp-runner -->
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/com.heroku/webapp-runner &ndash;&gt;
         <dependency>
-            <groupId>com.github.jsimone</groupId>
+            <groupId>com.heroku</groupId>
             <artifactId>webapp-runner</artifactId>
-            <version>9.0.27.1</version>
-            <scope>provided</scope>
-        </dependency>
-
+            <version>9.0.52.1</version>
+        </dependency>-->
 
     </dependencies>
 
@@ -106,23 +104,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.2</version>
-
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>com.github.jsimone</groupId>
-                                    <artifactId>webapp-runner</artifactId>
-                                    <version>9.0.27.1</version>
-                                    <destFileName>webapp-runner.jar</destFileName>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-
             </plugin>
         </plugins>
     </build>
