@@ -12,7 +12,7 @@ import java.util.List;
 public class DiabetesRecordsDAO implements DiabetesRecordsRepository {
 
 //    private final String URL = "jdbc:postgresql://localhost:5432/DiabetesMonitoringApp_db";
-    private final String URL = "jdbc:postgresql://ec2-34-242-8-97.eu-west-1.compute.amazonaws.com:5432/d9ml6m2suscco0?password=06b536c73e7b16bcea84a3005008af80439c2a6fbb3e812b12970a4ed92ffc75&sslmode=require&user=cvewmtqnzmnzmt";
+    private final String URL = "jdbc:postgresql://ec2-52-30-67-143.eu-west-1.compute.amazonaws.com:5432/d7rntr1jndtdkh?password=f2ed8c49b8dab64c60878012a3e658e078682be2aff0f5c4287a9f71a3b40bad&sslmode=require&user=idfqddnmjlhzor";
     private final String USER = "newuser";
     private final String PASSWORD = "9876543!@";
 
