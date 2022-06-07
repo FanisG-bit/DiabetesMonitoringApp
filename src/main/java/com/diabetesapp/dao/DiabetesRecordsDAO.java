@@ -11,17 +11,18 @@ import java.util.List;
 @Singleton
 public class DiabetesRecordsDAO implements DiabetesRecordsRepository {
 
-//    private final String URL = "jdbc:postgresql://localhost:5432/DiabetesMonitoringApp_db";
-    private final String URL = "jdbc:postgresql://ec2-52-30-67-143.eu-west-1.compute.amazonaws.com:5432/d7rntr1jndtdkh?password=f2ed8c49b8dab64c60878012a3e658e078682be2aff0f5c4287a9f71a3b40bad&sslmode=require&user=idfqddnmjlhzor";
+    private final String URL = "jdbc:postgresql://localhost:5432/DiabetesMonitoringApp_db";
     private final String USER = "newuser";
     private final String PASSWORD = "9876543!@";
+//    URL used in order to deploy on Heroku
+//    private final String URL = "jdbc:postgresql://ec2-52-30-67-143.eu-west-1.compute.amazonaws.com:5432/d7rntr1jndtdkh?password=f2ed8c49b8dab64c60878012a3e658e078682be2aff0f5c4287a9f71a3b40bad&sslmode=require&user=idfqddnmjlhzor";
 
     private Connection openConnection() {
         Connection connection = null;
         try {
             Class.forName("org.postgresql.Driver");
-//            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            connection = DriverManager.getConnection(URL);
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+//            connection = DriverManager.getConnection(URL);
         } catch (SQLException e) {
             System.err.println("Error opening database connection.");
             System.out.println(e);

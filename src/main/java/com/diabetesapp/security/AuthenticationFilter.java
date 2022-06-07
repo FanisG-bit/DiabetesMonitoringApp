@@ -36,6 +36,9 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
     }
 
+    // UNCOMMENT TO CHECK AUTHENTICATION FILTER USING POSTMAN. FOR ME IT WAS BRINGING AN ERROR WHEN
+    // MAKING REQUESTS FROM BROWSER
+
    /*@Override
     public void filter(ContainerRequestContext requestContext) {
         Method requestedMethod = resourceInfo.getResourceMethod();
